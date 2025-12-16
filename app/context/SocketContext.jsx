@@ -7,7 +7,11 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socketClient = io("http://localhost:3000");
+    // Use environment variable for backend URL
+    const socketClient = io(import.meta.env.VITE_API_URL, {
+      transports: ["websocket"], // ensures stable connection on Render
+    });
+
     setSocket(socketClient);
 
     return () => socketClient.disconnect();

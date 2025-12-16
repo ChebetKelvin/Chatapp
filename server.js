@@ -7,9 +7,13 @@ const server = http.createServer(app);
 
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+  res.send("Chat server is running 🚀");
+});
+
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: process.env.CLIENT_URL || "*",
     methods: ["GET", "POST"],
   },
   maxHttpBufferSize: 10 * 1024 * 1024, // 10MB - for file uploads
